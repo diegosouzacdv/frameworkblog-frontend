@@ -1,0 +1,34 @@
+<!-- Modal -->
+<div class="modal fade" id="modalCadastro" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Cadastro</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Nome*" aria-label="Nome" aria-describedby="basic-addon1" formControlName="nome">
+            </div>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="E-mail*" aria-label="E-mail" aria-describedby="basic-addon1" formControlName="email">
+            </div>
+            <div class="input-group mb-3">
+              <input type="password" class="form-control" placeholder="Senha*" aria-label="Senha" aria-describedby="basic-addon1" formControlName="senha">
+            </div>
+            <div class="modal-footer">
+              <button #closeModal type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+              <div *ngIf="spinner" class="spinner-border text-primary" role="status">
+                <span class="sr-only">Aguarde</span>
+              </div>
+              <button *ngIf="!spinner" type="submit" class="btn btn-primary" [disabled]="!usuarioForm.valid">Salvar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

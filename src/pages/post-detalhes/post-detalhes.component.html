@@ -1,0 +1,118 @@
+<app-header></app-header>
+<app-login></app-login>
+<app-criar-usuario></app-criar-usuario>
+<app-posts></app-posts>
+<app-section-header></app-section-header>
+<main id="main">
+    <div id="services">
+        <div class="container" data-aos="fade-up">
+
+            <header class="section-header wow fadeInUp">
+                <h3>{{post.titulo}}</h3>
+            </header>
+
+            <div class="row">
+                <div class="col-lg-12 col-md-6 box">
+                    <div style="padding: 50px;" data-aos="fade-up" data-aos-delay="100">
+                        <div class="row" style="padding-left: 60px;">
+                            <div class="col-lg-2 col-md-6">
+                                <div class="icon" style="padding-right: 10px;"><i class="bi bi-calendar"></i></div>
+                                <a class="text-icon">{{post.dataHoraPublicacao | date }}</a>
+                            </div>
+                            <div class="col-lg-2 col-md-6">
+                                <div class="icon" style="padding-right: 10px;"><i class="bi bi-person-fill"></i></div>
+                                <a class="text-icon">{{post.usuarioNome | slice:0:10}}...</a>
+                            </div>
+                            <div class="col-lg-2 col-md-6">
+                                <div class="icon" style="padding-right: 10px;"><i class="bi bi-chat-square-dots"></i>
+                                </div>
+                                <a class="text-icon">{{post.totalComentarios}} Comentários</a>
+                            </div>
+                            <div class="col-lg-2 col-md-6">
+                                <div class="icon" style="padding-right: 10px;"><i class="bi bi-menu-down"></i></div>
+                                <a class="text-icon">{{post.categoriaNome }}</a>
+                            </div>
+                            <div class="col-lg-2 col-md-6">
+                                <div class="icon" style="padding-right: 10px;"><i
+                                        [ngClass]="post.totalCurtidas > 0 ? 'bi bi-hand-thumbs-up-fill' : 'bi bi-hand-thumbs-up'"
+                                        (click)="curtir()"></i>
+                                </div>
+                                <a class="text-icon">{{post.totalCurtidas }}</a>
+                                curtidas
+                            </div>
+                            <div class="col-lg-2 col-md-6">
+                                <div class="icon" style="padding-right: 10px;"><i
+                                        [ngClass]="post.visualizacoes > 0 ? 'bi-bar-chart-line-fill' : 'bi-bar-chart-line-fill'"></i>
+                                    Post Views
+                                </div>
+                                <a class="text-icon">{{post.visualizacoes}}</a>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-left: 10px; padding-top: 60px;">
+                            <p>{{post.descricao}}</p>
+
+
+                            <div class="container-fotos ">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-4 col-md-3 fotos " *ngFor="let imagem of post.imagens; index as i">
+                                     
+                                        <img src="{{url}}{{imagem.action}}" alt="..." class="img-thumbnail rounded ">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row justify-content-end" style="padding-left: 60px; padding-top: 30px;"
+                            *ngIf="idUsuario == post.usuarioId">
+                            <div class="col-lg-2 col-md-3 media">
+                                <div class="botao text-end" (click)="deletePost()"> <button class="btn btn-warning">DELETAR
+                                        POST</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+
+        <div class="container-links">
+            <div class="row justify-content-center">
+                <div class="col-lg-2 col-md-3 links d-flex justify-content-end flex-wrap" style="padding-left: 20px;" *ngFor="let link of post.links; index as i">
+                    <i class="bi bi-cursor-fill"></i> <a href="{{link.descricao}}" target="_blank">{{link.descricao  | slice:0:25}}...</a>
+                </div>
+            </div>
+        </div>
+        <div class="container-comentario">
+            <div class="row comentarios justify-content-center">
+                <div class="col-6">
+                    <h4>Deixe aqui seu comentário</h4>
+                    <form [formGroup]="comentarioForm" class="form-comentarios d-flex justify-content-end flex-wrap">
+                        <textarea name="descricao" id="descricao" placeholder="Comentário"
+                            formControlName="descricao"></textarea>
+                        <button class="btn btn-primary" type="button" (click)="onSubmit()"
+                            [disabled]="!comentarioForm.valid">Comentar</button>
+                    </form>
+                    <div class="media" *ngFor="let comentario of comentarios; index as i">
+                        <img src="assets/img/avatar.jpg" width="64" height="64" alt="" align="left">
+                        <div class="media-body">
+                            <p class="nome">{{comentario?.nomeUsuario}} <span>{{comentario?.dataHoraPublicacao |
+                                    date}}</span></p>
+                            <p class="comentario">
+                                {{comentario.descricao}}
+                            </p>
+                            <div class="botao text-end">
+                                <!-- <a href="">Responder</a>
+                                <a href="">Editar</a> -->
+                                <button class="btn" (click)="deleteComentario(comentario.id, comentario.usuarioId)"
+                                    *ngIf="comentario.usuarioId == idUsuario">Apagar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+<app-footer></app-footer>

@@ -1,0 +1,64 @@
+<section id="services">
+  <div class="container" data-aos="fade-up">
+
+    <header class="section-header wow fadeInUp">
+      <h3>CONTEÚDO SOBRE TECNOLOGIA E GESTÃO </h3>
+      <p>Artigos, tendências, tutoriais e muita informação para você ficar atualizado e progredir na sua carreira</p>
+    </header>
+
+    <div class="row" *ngFor="let post of posts; index as i">
+      <div class="col-lg-12 col-md-6 box">
+        <div class="card-header" style="padding: 50px;" data-aos="fade-up" data-aos-delay="100">
+          <h4 class="title" ><a routerLink="/post-detalhes/{{post.id}}" routerLinkActive="active">{{post.titulo}}</a></h4>
+          <div class="row"  style="padding-left: 60px;">
+            <div class="col-lg-2 col-md-6">
+              <div class="icon"  style="padding-right: 10px;"><i class="bi bi-calendar"></i></div>
+              <a class="text-icon">{{post.dataHoraPublicacao | date }}</a>
+            </div>
+            <div class="col-lg-2 col-md-6">
+              <div class="icon" style="padding-right: 10px;"><i class="bi bi-person-fill"></i></div>
+              <a class="text-icon">{{post.usuarioNome | slice:0:10}}...</a>
+            </div>
+            <div class="col-lg-2 col-md-6">
+              <div class="icon" style="padding-right: 10px;"><i class="bi bi-chat-square-dots"></i></div>
+              <a class="text-icon">{{post.totalComentarios}} Comentários</a>
+            </div>
+            <div class="col-lg-2 col-md-6">
+              <div class="icon" style="padding-right: 10px;"><i class="bi bi-menu-down"></i></div>
+              <a class="text-icon">{{post.categoriaNome }}</a>
+            </div>
+            <div class="col-lg-2 col-md-6">
+              <div class="icon" style="padding-right: 10px;"><i [ngClass]="post.totalCurtidas > 0 ? 'bi bi-hand-thumbs-up-fill' : 'bi bi-hand-thumbs-up'"></i>
+              </div>
+              <a class="text-icon">{{post.totalCurtidas }}</a>
+             
+
+              
+            </div>
+            <div class="col-lg-12 col-md-6 descriptionbox">
+                <div class="row">
+                  <div class="col-lg-2 col-md-2 container-fotos fotos"   *ngIf="post.imagens.length > 0" >
+                      <img  src="{{url}}{{post.imagens[0].action}}" alt="..." class="img-thumbnail rounded ">
+                  </div>
+                  <div class="col-lg-10 col-md-10 container-fotos fotos">
+                    <h5 class="description">{{post.descricao | slice:0:300  }}...</h5>
+                  </div>
+            </div>
+            </div>
+
+
+
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-auto col-lg-auto">
+      <a class="btn btn-outline-secondary prev mt-3 mb-3"  title="go back" (click)="retornarPagina()"><i class="bi bi-chevron-left" ></i></a>
+      {{paginaAtual}} de {{paginaTotal}}
+      <a class="btn btn-outline-secondary prev mt-3 mb-3"  title="go back" (click)="avancarPagina()"><i class="bi bi-chevron-right" ></i></a>
+    </div>
+  </div>
+</section>

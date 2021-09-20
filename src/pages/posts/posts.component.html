@@ -1,0 +1,93 @@
+<!-- Modal -->
+<div class="modal fade" id="modalPost" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Novo Post</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+                        <div class="form-group">
+                            <label for="titulo">Título*</label>
+                            <input type="text" class="form-control" id="titulo" aria-describedby="titulo"
+                                placeholder="Título" formControlName="titulo">
+                            <small class="form-text text-muted" *ngIf="postFormControl.titulo.invalid">Título é
+                                obrigatório</small>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="descricao">Descrição*</label>
+                            <textarea class="form-control" id="descricao" rows="3"
+                                formControlName="descricao"></textarea>
+                            <small class="form-text text-muted" *ngIf="postFormControl.descricao.invalid">Descrição é
+                                obrigatório</small>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="categoria">Categoria*</label>
+                            <select class="form-select" aria-label="categoria" formControlName="categoriaId">
+                                <option *ngFor="let categoria of categorias | async" [value]="categoria.id">
+                                    {{categoria.nome}}</option>
+
+                            </select>
+                            <small class="form-text text-muted" *ngIf="postFormControl.categoriaId.invalid">Categoria é
+                                obrigatório</small>
+                        </div>
+                        <br>
+                        <div class="row justify-content-around align-items-center">
+                            <label for="titulo">Links</label>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    <input #linkInput type="text" class="form-control" id="links" aria-describedby="links"
+                                        placeholder="Links" formControlName="links">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2">
+                                <button type="button" class="btn btn-primary" (click)="addUrl(linkInput.value)"> Adicionar</button>
+                            </div>
+                            <div class="col-lg-2 col-md-2">
+                                <button type="button" class="btn btn-danger" (click)="limparUrl()"> Limpar</button>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center pt-3">
+                            <div style="padding-bottom: 10px; " class="col-lg-12 col-md-12" *ngFor="let url of urls">
+                                <a href="#" style="font-size: 16px; " class="badge alert-success">{{url}}</a>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="form-group" *ngFor="let f of files">
+                            <label for="titulo">Imagem</label>
+                            <input type="hidden" class="form-control" id="imagem" aria-describedby="imagem"
+                                placeholder="imagem" [value]="f.name">
+                        </div>
+
+                        <br>
+
+                        <ngx-dropzone style="background-color: #222735; margin: 0 auto;" #formFotos (change)="onSelect($event)">
+                            <ngx-dropzone-label>Upload Fotos</ngx-dropzone-label>
+                            <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                                <ngx-dropzone-label>{{ f.name | slice:0:4 }}...</ngx-dropzone-label>
+
+                            </ngx-dropzone-preview>
+                        </ngx-dropzone>
+
+                        <button type="button" class="btn btn-primary"  (click)="onSelect(formFotos)" >Cofirmar</button>
+                        <br>
+                        <div class="modal-footer">
+                            <button #closeModal type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-primary" [disabled]="!postForm.valid">Salvar</button>
+                        </div>
+                        <br>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
